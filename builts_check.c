@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * builts_check - checks if the command is builten command
