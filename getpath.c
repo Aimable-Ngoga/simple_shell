@@ -10,7 +10,6 @@
 char *getpath(char *command)
 {
 	char *path, *pathtoken, *filepath, *pathcopy;
-	
 
 	path = getenv("PATH");
 
