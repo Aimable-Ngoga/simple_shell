@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * Determine if the shell is in interactive mode.
