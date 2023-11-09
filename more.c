@@ -1,20 +1,20 @@
 #include "shell.h"
 
 /**
- * builtin_exit - This exit the program with the status
+ * builtin_exit - Exits the program with a specified status.
  * @data: A struct containing the program's data.
- * Return: 0 on success, or other number if its specified in the args.
+ * Return: 0 on success, or another number if specified in the arguments.
  */
 int builtin_exit(data_of_program *data)
 {
 	int i;
 
 	if (data->tokens[1] != NULL)
-	{/*if exists arg for exit, check if is a number*/
+	{/* If there is an argument for exit, check if it is a number */
 		for (i = 0; data->tokens[1][i]; i++)
 			if ((data->tokens[1][i] < '0' || data->tokens[1][i] > '9')
 				&& data->tokens[1][i] != '+')
-			{/*if is not a number*/
+			{/* If it is not a number */
 				errno = 2;
 				return (2);
 			}
@@ -25,13 +25,14 @@ int builtin_exit(data_of_program *data)
 }
 
 /**
- * builtin_cd - This change current directory
+ * builtin_cd - Changes the current directory.
  * @data: A struct containing the program's data.
- * Return: 0 on Success, or other number if its specified in the args
+ * Return: 0 on success, or another number if specified in the arguments.
  */
 int builtin_cd(data_of_program *data)
 {
-	char *dir_home = env_get_key("HOME", data), *dir_old = NULL;
+	char *dir_home = env_get_key("HOME", data);
+	char *dir_old = NULL;
 	char old_dir[128] = {0};
 	int err_code = 0;
 
@@ -63,10 +64,10 @@ int builtin_cd(data_of_program *data)
 }
 
 /**
- * set_working_directory - Set the working directory
+ * set_working_directory - Sets the working directory.
  * @data: A struct containing the program's data.
  * @new_dir: Path to be set as the working directory.
- * Return: 0 on success, or other number if its specified in the args
+ * Return: 0 on success, or another number if specified in the arguments.
  */
 int set_working_directory(data_of_program *data, char *new_dir)
 {
@@ -90,9 +91,9 @@ int set_working_directory(data_of_program *data, char *new_dir)
 }
 
 /**
- * builtin_help - Display the env where the shell runs
+ * builtin_help - Displays help information about commands.
  * @data: A struct containing the program's data.
- * Return: 0 on success, or other number if its specified in the arguments
+ * Return: 0 on success, or another number if specified in the arguments.
  */
 int builtin_help(data_of_program *data)
 {
@@ -101,7 +102,7 @@ int builtin_help(data_of_program *data)
 
 	infos[0] = HELP_MSG;
 
-	/* validate args */
+	/* Validate arguments */
 	if (data->tokens[1] == NULL)
 	{
 		_print(infos[0] + 6);
@@ -121,7 +122,7 @@ int builtin_help(data_of_program *data)
 
 	for (i = 0; infos[i]; i++)
 	{
-		/*print the length of string */
+		/* Print the length of the string */
 		length = _strlen(data->tokens[1]);
 		if (_strcmp(data->tokens[1], infos[i], length))
 		{
@@ -129,27 +130,28 @@ int builtin_help(data_of_program *data)
 			return (1);
 		}
 	}
-	/*if there is no match, print error and return -1 */
+	/* If there is no match, print an error and return -1 */
 	errno = EINVAL;
 	perror(data->command_name);
 	return (0);
 }
 
 /**
- * builtin_alias - add, remove or display aliases
+ * builtin_alias - Add, remove, or display aliases.
  * @data: A struct containing the program's data.
- * Return: 0 on success, or other number if its specified in the args
+ * Return: 0 on success, or another number if specified in the arguments.
  */
 int builtin_alias(data_of_program *data)
 {
 	int i = 0;
 
-	/* if there are no arguments, print all environment */
+	/* If there are no arguments, print all aliases */
 	if (data->tokens[1] == NULL)
 		return (print_alias(data, NULL));
 
 	while (data->tokens[++i])
-	{/* if there are arguments, set or print each env variable*/
+	{
+		/* If there are arguments, set or print each alias */
 		if (count_characters(data->tokens[i], "="))
 			set_alias(data->tokens[i], data);
 		else
