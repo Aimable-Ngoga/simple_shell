@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * excute - create new pid with fork and run ecxecv
